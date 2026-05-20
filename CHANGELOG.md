@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-05-20
+
 ### Added
 
 - Initial extraction of the `oihana\mysql` namespace from [`oihana/php-system`](https://github.com/BcommeBois/oihana-php-system).
