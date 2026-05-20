@@ -4,6 +4,10 @@ namespace oihana\mysql;
 
 use DI\DependencyException;
 use DI\NotFoundException;
+
+use Exception;
+use ReflectionException;
+
 use oihana\interfaces\ToAssociativeArray;
 use oihana\models\pdo\PDOModel;
 use oihana\mysql\traits\MysqlDatabaseTrait;
@@ -12,7 +16,6 @@ use oihana\mysql\traits\MysqlTableTrait;
 use oihana\mysql\traits\MysqlUserTrait;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use ReflectionException;
 
 /**
  * MysqlModel provides high-level MySQL administrative operations using PDO.
@@ -68,12 +71,14 @@ class MysqlModel extends PDOModel implements ToAssociativeArray
         MysqlUserTrait      ;
 
     /**
+     * Returns the array representation of the instance.
      * @param array $options
      * @return array
      * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @throws DependencyException
+     * @throws Exception
      * @throws NotFoundException
+     * @throws NotFoundExceptionInterface
      * @throws ReflectionException
      */
     public function toArray( array $options = [] ): array
