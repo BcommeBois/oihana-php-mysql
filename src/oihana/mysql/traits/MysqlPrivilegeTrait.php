@@ -52,7 +52,7 @@ trait MysqlPrivilegeTrait
             $statements = $this->pdo?->query( $query );
             return $statements ? $statements->fetchAll( PDO::FETCH_COLUMN ) : [] ;
         }
-        catch ( PDOException $e )
+        catch ( PDOException )
         {
             return [] ; // Access denied or unknown user: return empty
         }
@@ -123,6 +123,7 @@ trait MysqlPrivilegeTrait
      * @param string      $username    The MySQL user.
      * @param string      $host        Host (default: 'localhost').
      * @param string|null $table       Optional table name. If null, grants privileges on the entire database.
+     *
      * @return bool                    True if the grant statement executed successfully.
      *
      * @example
@@ -248,7 +249,7 @@ trait MysqlPrivilegeTrait
             $this->assertIdentifier( $table );
         }
 
-        $scope   = $table ? "{$dbname}.{$table}" : "{$dbname}.*";
+        $scope   = $table ? "$dbname.$table" : "$dbname.*";
         $grants  = $this->listPrivileges( $username , $host ) ;
 
         return isset( $grants[ $scope ] ) && count( $grants[ $scope ] ) > 0 ;
@@ -279,11 +280,11 @@ trait MysqlPrivilegeTrait
 
         if ( $table !== null )
         {
-            $this->assertIdentifier($table);
+            $this->assertIdentifier( $table ) ;
         }
 
         $privilege = strtoupper( $privilege ) ;
-        $scope     = $table ? "{$dbname}.{$table}" : "{$dbname}.*";
+        $scope     = $table ? "$dbname.$table" : "$dbname.*";
 
         $grants = $this->listPrivileges( $username , $host ) ;
 
@@ -332,7 +333,7 @@ trait MysqlPrivilegeTrait
             {
                 $databases[] = '*' ;
             }
-            elseif ( preg_match('/^([^\.]+)\./', $scope, $match ) )
+            elseif ( preg_match('/^([^.]+)\./', $scope, $match ) )
             {
                 $databases[] = $match[1];
             }

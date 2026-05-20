@@ -2,11 +2,15 @@
 
 namespace oihana\mysql\traits;
 
+use DI\DependencyException;
+use DI\NotFoundException;
+use Exception;
 use oihana\enums\Char;
 use oihana\models\pdo\PDOTrait;
 use PDO;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use ReflectionException;
 
 /**
  * Provides high-level operations for managing MySQL databases.
@@ -15,7 +19,7 @@ use Psr\Container\NotFoundExceptionInterface;
  *
  * Requires a connected PDO instance and uses helper traits for assertions and bindings.
  *
- * @package oihana\db\mysql\traits
+ * @package oihana\mysql\traits
  * @author  Marc Alcaraz (ekameleon)
  * @since   1.0.0
  */
@@ -87,9 +91,14 @@ trait MysqlDatabaseTrait
      * Returns the default character set and collation of a database.
      *
      * @param string $dbname
+     *
      * @return array{Charset: string, Collation: string}|null
+     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
+     * @throws DependencyException
+     * @throws NotFoundException
+     * @throws ReflectionException
      */
     public function getDatabaseCharset(string $dbname): ?array
     {
@@ -109,6 +118,7 @@ trait MysqlDatabaseTrait
      *
      * @param string $dbname
      * @return int Size in bytes.
+     * @throws Exception
      */
     public function getDatabaseSize(string $dbname): int
     {
@@ -126,6 +136,8 @@ trait MysqlDatabaseTrait
      *
      * @param bool $excludeSystem Exclude system databases like 'information_schema', 'mysql', etc.
      * @return array<int, string> List of database names.
+     *
+     * @throws Exception
      */
     public function listDatabases( bool $excludeSystem = true ): array
     {
@@ -151,6 +163,8 @@ trait MysqlDatabaseTrait
      *
      * @param string $dbname
      * @return bool True if all tables optimized successfully.
+     *
+     * @throws Exception
      */
     public function optimizeDatabase(string $dbname): bool
     {
@@ -174,7 +188,10 @@ trait MysqlDatabaseTrait
      * Repairs all tables in a database.
      *
      * @param string $dbname
+     *
      * @return bool True if all tables repaired successfully.
+     *
+     * @throws Exception
      */
     public function repairDatabase( string $dbname ): bool
     {

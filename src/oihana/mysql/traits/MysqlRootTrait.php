@@ -16,7 +16,7 @@ use oihana\traits\ContainerTrait;
  * This trait depends on a PSR-11 compatible container and expects a `MysqlModel` instance
  * to be provided directly or by reference (as a container service name).
  *
- * @package oihana\db\mysql\traits
+ * @package oihana\mysql\traits
  * @author  Marc Alcaraz (ekameleon)
  * @since   1.0.0
  */

@@ -11,7 +11,7 @@ use InvalidArgumentException;
  *
  * Intended to be reused across traits or models that manage MySQL operations.
  *
- * @package oihana\db\mysql\traits
+ * @package oihana\mysql\traits
  * @author  Marc Alcaraz (ekameleon)
  * @since   1.0.0
  */

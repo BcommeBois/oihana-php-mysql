@@ -2,9 +2,12 @@
 
 namespace oihana\mysql\traits;
 
-use oihana\models\pdo\PDOTrait;
+use Exception;
+
 use PDO;
 use PDOException;
+
+use oihana\models\pdo\PDOTrait;
 
 /**
  * Provides operations for managing and inspecting MySQL tables in the current database.
@@ -12,7 +15,7 @@ use PDOException;
  *
  * Requires a connected PDO instance and uses `MysqlAssertionsTrait` for input validation.
  *
- * @package oihana\db\mysql\traits
+ * @package oihana\mysql\traits
  * @author  Marc Alcaraz (ekameleon)
  * @since   1.0.0
  */
@@ -86,11 +89,15 @@ trait MysqlTableTrait
 
         return $result ;
     }
+
     /**
      * Returns the size of a table in bytes.
      *
      * @param string $table Table name.
+     *
      * @return int Table size in bytes.
+     *
+     * @throws Exception
      */
     public function getTableSize(string $table): int
     {
