@@ -1,0 +1,56 @@
+{
+    "name" : "oihana/php-mysql" ,
+    "type" : "library" ,
+    "description" : "MySQL utilities for PHP 8.4+: DSN builder, robust PDO connection builder, and high-level admin model for managing databases, users, privileges and tables." ,
+    "keywords" : [ "php" , "mysql" , "pdo" , "dsn" , "database" , "oihana" ] ,
+    "homepage" : "https://github.com/BcommeBois/oihana-php-mysql" ,
+    "license" : "MPL-2.0" ,
+    "authors" : [
+        {
+            "name" : "Marc Alcaraz" ,
+            "email" : "marc@ooop.fr" ,
+            "homepage" : "https://www.ooop.fr" ,
+            "role" : "Project Founder, Lead Developer."
+        }
+    ],
+    "support": {
+        "email": "marc@ooop.fr"
+    },
+    "scripts": {
+        "doc": "rm -rf docs && mkdir docs && cp -r assets docs/assets && ./vendor/bin/phpdoc -c phpdoc.xml -v" ,
+        "test": "./vendor/bin/phpunit"
+    },
+    "autoload": {
+        "psr-4" :
+        {
+            "oihana\\mysql\\" : "src/oihana/mysql"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "tests\\" : "tests"
+        }
+    },
+    "require": {
+        "php": ">=8.4",
+        "ext-pdo": "*",
+        "oihana/php-core": "dev-main",
+        "oihana/php-enums": "dev-main",
+        "oihana/php-reflect": "dev-main",
+        "oihana/php-system": "dev-main",
+        "php-di/php-di": "^7.0",
+        "psr/container": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12",
+        "nunomaduro/collision": "^8.8",
+        "phpdocumentor/shim": "^3.8"
+    },
+    "minimum-stability" : "dev" ,
+    "prefer-stable" : true ,
+    "config": {
+        "allow-plugins": {
+            "phpdocumentor/shim": true
+        }
+    }
+}
