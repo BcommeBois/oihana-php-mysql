@@ -110,7 +110,9 @@ trait MysqlDatabaseTrait
 
         $result = $this->fetch($query, ['dbname' => $dbname]);
 
-        return is_array($result) ? $result : null;
+        // PDOTrait::fetch() returns the row cast to an object (or null), so
+        // normalise it back to the documented array{Charset, Collation} shape.
+        return $result === null ? null : (array) $result;
     }
 
     /**
