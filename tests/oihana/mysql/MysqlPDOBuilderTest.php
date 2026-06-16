@@ -17,6 +17,15 @@ class DummyPDOBuilder extends MysqlPDOBuilder
     }
 }
 
+/** Exposes the real (non-overridden) createPDO() so it can be exercised directly. */
+class ExposedPDOBuilder extends MysqlPDOBuilder
+{
+    public function makePDO(string $dsn): PDO
+    {
+        return $this->createPDO($dsn, null, null, []);
+    }
+}
+
 class MysqlPDOBuilderTest extends TestCase
 {
     public function testBuilderWithValidConfiguration(): void
@@ -146,5 +155,26 @@ class MysqlPDOBuilderTest extends TestCase
 
         $pdo = $builder();
         $this->assertInstanceOf(PDO::class , $pdo ) ;
+    }
+
+    public function testInvokeValidatesWhenEnabled(): void
+    {
+        $builder = new DummyPDOBuilder
+        ([
+            'host'     => '127.0.0.1',
+            'dbname'   => 'test',
+            'username' => 'root',
+            'password' => '',
+            'validate' => true, // exercise the validation branch of __invoke()
+        ]);
+
+        $this->assertInstanceOf(PDO::class , $builder() ) ;
+    }
+
+    public function testCreatePdoInstantiatesAPdo(): void
+    {
+        $builder = new ExposedPDOBuilder(['validate' => false]);
+
+        $this->assertInstanceOf(PDO::class , $builder->makePDO('sqlite::memory:') ) ;
     }
 }

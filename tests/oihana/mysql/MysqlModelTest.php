@@ -3,6 +3,7 @@
 namespace tests\oihana\mysql;
 
 use PDO;
+use PDOStatement;
 
 use DI\Container;
 
@@ -53,5 +54,22 @@ class MysqlModelTest extends TestCase
         $this->expectExceptionMessage('Invalid identifier');
 
         $this->model->createDatabase('invalid-db-name!');
+    }
+
+    public function testToArrayReturnsDatabasesAndUsers(): void
+    {
+        $stmt = $this->createStub(PDOStatement::class);
+        $stmt->method('execute')->willReturn(true);
+        $stmt->method('fetchAll')->willReturn(['app', 'shop']);
+        $stmt->method('fetch')->willReturn(['User' => 'root', 'Host' => 'localhost']);
+
+        $pdo = $this->createStub(PDO::class);
+        $pdo->method('prepare')->willReturn($stmt);
+        $this->model->pdo = $pdo;
+
+        $array = $this->model->toArray();
+
+        $this->assertSame(['app', 'shop'], $array['databases']);
+        $this->assertEquals((object) ['User' => 'root', 'Host' => 'localhost'], $array['users']);
     }
 }
