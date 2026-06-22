@@ -16,6 +16,8 @@ composer-dev.lock
 /build/
 /build/coverage/history.json   # coverage trend log — local only
 /.phpdoc/cache
+# phpDocumentor output — built & deployed by CI (GitHub Pages)
+/docs/
 .php-cs-fixer.cache
 .phpunit.cache
 .phpunit.result.cache
