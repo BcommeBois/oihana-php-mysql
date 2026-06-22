@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+### Changed
+
+- Dependencies: replaced `oihana/php-system` with the focused `oihana/php-models` and `oihana/php-traits` packages. `php-mysql` only consumes `oihana\models\pdo\PDOModel` / `PDOTrait` and `oihana\traits\ContainerTrait` / `ToStringTrait`, so this drops the heavy Slim/Twig/Symfony stack that `php-system` pulled in. No code or public-API change; suite stays green at 100% coverage (117 tests).
+
 ## [1.0.0] - 2026-05-20
 
 ### Added

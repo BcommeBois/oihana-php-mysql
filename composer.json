@@ -41,8 +41,9 @@
         "ext-pdo": "*",
         "oihana/php-core": "dev-main",
         "oihana/php-enums": "dev-main",
+        "oihana/php-models": "dev-main",
         "oihana/php-reflect": "dev-main",
-        "oihana/php-system": "dev-main",
+        "oihana/php-traits": "dev-main",
         "php-di/php-di": "^7.0",
         "psr/container": "^2.0"
     },
